@@ -5,6 +5,7 @@
     #include <winsock2.h>
     #include <ws2tcpip.h>
     #include <winerror.h>
+    #include <string>
     #pragma comment(lib, "ws2_32.lib")
     using socket_t = SOCKET;
 #else
@@ -14,6 +15,7 @@
     #include <unistd.h>
     #include <netdb.h>
     #include <cstring>
+    #include <string>
     using socket_t = int;
     #define INVALID_SOCKET -1
     #define SOCKET_ERROR   -1
