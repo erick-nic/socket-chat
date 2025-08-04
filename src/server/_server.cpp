@@ -1,11 +1,10 @@
 #include "../include/sockets_utils.h"
+#include "../include/handle_client.h"
 #include <iostream>
+#include <vector>
 
 int main() {
-    char recv_buffer[1024];
-    int recv_buffer_size = sizeof(recv_buffer);
     int i_result;
-    const char* send_buff = "message recived";
     struct sockaddr_in service;
     service.sin_family = AF_INET;
     service.sin_addr.s_addr = INADDR_ANY;
@@ -71,34 +70,8 @@ int main() {
             return 1;
         }
 
-        std::cout << "client connected..." << std::endl;
-        do {
-            i_result = recv(c_sock, recv_buffer, recv_buffer_size, 0);
-            if (i_result > 0) {
-                recv_buffer[i_result] = '\0';
-                std::cout << "Received: " << recv_buffer << std::endl;
-                i_result = send(c_sock, send_buff, strlen(send_buff), 0);
-                if (i_result == SOCKET_ERROR) {
-                    #ifdef _WIN32 
-                        std::cerr << "error sending data: " << WSAGetLastError() << std::endl;
-                    #else
-                        std::cerr << "error sending data " << std::endl;
-                    #endif
-                }
-            } else if (i_result == 0) {
-                std::cout << "connection close by the client" << std::endl; 
-                break;
-            } else {
-                #ifdef _WIN32 
-                    std::cerr << "error receiving data: " << WSAGetLastError() << std::endl;
-                #else
-                    std::cerr << "error receiving data" << std::endl;
-                #endif
-                break;
-            }
-        } while (true);
-        close_socket(c_sock);
-        std::cout << "connection with the client ended" << std::endl;
+        std::thread c_thread(handle_client, c_sock);
+        c_thread.detach();
     }
     close_socket(s_sock);
     cleanup_sockets();

@@ -1,5 +1,6 @@
 #include "../include/sockets_utils.h"
 #include <iostream>
+#include <thread>
 
 int main () {
     char recv_buffer[1024];
@@ -7,17 +8,17 @@ int main () {
     int i_result;
     struct sockaddr_in service;
     service.sin_family = AF_INET;
-    inet_pton(AF_INET, "192.168.100.3", &service.sin_addr.s_addr);
+    inet_pton(AF_INET, "192.168.100.5", &service.sin_addr.s_addr);
     service.sin_port = htons(27015);
     std::string message;
 
     if (!init_sockets()) {
         #ifdef _WIN32
             std::cout << WSAGetLastError();
-            std::cerr << "Failed to initialize sockets" << std::endl;
+            std::cerr << "failed to initialize sockets" << std::endl;
         #else
-            std::cerr << "Failed to initialize sockets" << std::endl;
-            std::cerr << "Error: " << strerror(errno) << std::endl;
+            std::cerr << "failed to initialize sockets" << std::endl;
+            std::cerr << "error: " << strerror(errno) << std::endl;
         #endif
         cleanup_sockets();
         return 1;
