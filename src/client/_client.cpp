@@ -5,10 +5,11 @@
 int main () {
     char recv_buffer[1024];
     int recv_buffer_size = sizeof(recv_buffer);
+    std::string ip = "192.168.100.5";
     int i_result;
     struct sockaddr_in service;
     service.sin_family = AF_INET;
-    inet_pton(AF_INET, "192.168.100.5", &service.sin_addr.s_addr);
+    inet_pton(AF_INET, ip.c_str(), &service.sin_addr.s_addr);
     service.sin_port = htons(27015);
     std::string message;
 
