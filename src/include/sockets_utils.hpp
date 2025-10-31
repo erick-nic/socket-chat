@@ -23,8 +23,8 @@
 
 inline bool init_sockets() {
     #ifdef _WIN32
-        WSADATA wsaData;
-        return (WSAStartup(MAKEWORD(2, 2), &wsaData) == 0);
+        WSADATA wsa_data;
+        return (WSAStartup(MAKEWORD(2, 2), &wsa_data) == 0);
     #else
         return true;
     #endif
@@ -36,10 +36,10 @@ inline void cleanup_sockets() {
     #endif
 }
 
-inline void close_socket(socket_t sock) {
+inline void close_socket(socket_t socket) {
     #ifdef _WIN32
-        closesocket(sock);
+        closesocket(socket);
     #else
-        close(sock);
+        close(socket);
     #endif
 }

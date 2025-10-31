@@ -11,7 +11,7 @@ if not exist ".\bin" (
 
 :: start compiling the server socket
 echo compiling the server socket...
-clang++ -I src/include src/server/handle_client.cpp src/server/_server.cpp -o bin/server.exe -lws2_32
+clang++ -std=c++23 -I src/include src/server/main.cpp src/server/server.cpp -o bin/server.exe -lws2_32
 if errorLevel == 1 (
     echo there was an error during the compilation
     pause

@@ -1,6 +1,8 @@
-#include "../include/sockets_utils.h"
+#include "../include/sockets_utils.hpp"
 #include <iostream>
 #include <thread>
+
+char recv_buffer[1024];
 
 int main () {
     char recv_buffer[1024];
