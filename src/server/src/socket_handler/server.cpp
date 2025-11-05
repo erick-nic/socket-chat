@@ -1,7 +1,7 @@
 #include <iostream>
-#include "../include/server.hpp"
+#include "../include/socket_class.hpp"
 
-Server::Server() : server_socket(INVALID_SOCKET) {
+Server::Server(): s_socket(INVALID_SOCKET) {
     if (!init_sockets()) {
         throw std::runtime_error("Error init the server socket");
     }
@@ -9,14 +9,14 @@ Server::Server() : server_socket(INVALID_SOCKET) {
     service.sin_family = AF_INET;
     service.sin_addr.s_addr = INADDR_ANY;
     service.sin_port = htons(27015);
-    server_socket = socket(AF_INET, SOCK_STREAM, 0);
+    s_socket = socket(AF_INET, SOCK_STREAM, 0);
 
-    if (server_socket == INVALID_SOCKET) {
+    if (s_socket == INVALID_SOCKET) {
         throw std::runtime_error("Error creating the socket");
         cleanup_sockets();
     }
 
-    i_result = bind(server_socket, (struct sockaddr *)&service, sizeof(service));
+    i_result = bind(s_socket, reinterpret_cast<sockaddr*>(&service), sizeof(service));
 
     if (i_result == SOCKET_ERROR) {
         throw std::runtime_error("Error binding the socket");
@@ -27,8 +27,12 @@ Server::Server() : server_socket(INVALID_SOCKET) {
 }
 
 Server::~Server() {
-    if (server_socket != INVALID_SOCKET) {
-        close_socket(server_socket);
+    if (s_socket != INVALID_SOCKET) {
+        close_socket(s_socket);
     }
     cleanup_sockets();
+}
+
+socket_t s_accept() {
+
 }
