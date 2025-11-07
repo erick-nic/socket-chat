@@ -1,5 +1,4 @@
-#include <iostream>
-#include "../include/socket_class.hpp"
+#include "socket_class.hpp"
 
 Server::Server(): s_socket(INVALID_SOCKET) {
     if (!init_sockets()) {
@@ -33,6 +32,20 @@ Server::~Server() {
     cleanup_sockets();
 }
 
-socket_t s_accept() {
+socket_t Server::s_listen() {
+    i_result = listen(s_socket, SOMAXCONN);
 
+    if (i_result == SOCKET_ERROR) {
+        #ifdef _WIN32
+            std::cerr << WSAGetLastError() << std::endl;
+        #else 
+        std::cerr << "Error listen in server socket" << std::endl;
+        #endif
+
+        cleanup_sockets();
+        return -1;
+    }
+    
+    std::cout << "Server socket listen" << std::endl;
+    return 0;
 }

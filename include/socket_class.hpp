@@ -1,5 +1,6 @@
 #pragma once
-#include "../include/socket/sockets_utils.hpp"
+
+#include "socket/sockets_utils.hpp"
 #include <stdexcept>
 #include <iostream>
 
@@ -13,5 +14,6 @@ public:
     Server();    
     ~Server(); 
 
+    socket_t s_listen();
     socket_t s_accept();
 };  

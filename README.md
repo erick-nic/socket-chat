@@ -1,4 +1,4 @@
-## Local chat made with c++ to get knowledge about sockets and threads, using concurrency
+### Local chat made with c++ to get knowledge about sockets and threads, using concurrency
 This is a pretty basic CLI message app that uses sockets to realtime chat between two or more terminals using sockets
 
 ### how this works
